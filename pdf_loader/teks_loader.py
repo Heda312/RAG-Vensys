@@ -1,13 +1,19 @@
 """Ekstrak teks dari PDF digital ke TXT atau Markdown tanpa OCR."""
 
-import argparse
 from pathlib import Path
 
 import pymupdf4llm
 
 
+# Ubah nilai berikut sesuai file PDF dan format output yang ingin digunakan.
+INPUT_PDF = Path("input_pdf/Pedoman PI.pdf")
+OUTPUT_FILE = Path("output/Pedoman PI.md")
+OUTPUT_FORMAT = "md"
+
+
 def extract_text(input_pdf: Path, output_file: Path, output_format: str) -> Path:
     """Membaca PDF digital dan menyimpan teks hasil ekstraksi."""
+    
     if not input_pdf.is_file():
         raise FileNotFoundError(f"File PDF tidak ditemukan: {input_pdf}")
 
@@ -33,38 +39,12 @@ def extract_text(input_pdf: Path, output_file: Path, output_format: str) -> Path
     return output_file
 
 
-def build_parser() -> argparse.ArgumentParser:
-    """Membuat daftar argumen command line."""
-    parser = argparse.ArgumentParser(
-        description="Ekstrak teks PDF digital tanpa OCR memakai PyMuPDF4LLM."
-    )
-    parser.add_argument("input_pdf", type=Path, help="Lokasi file PDF yang dibaca")
-    parser.add_argument(
-        "-f",
-        "--format",
-        choices=("txt", "md"),
-        default="txt",
-        help="Format hasil: txt (default) atau md",
-    )
-    parser.add_argument(
-        "-o",
-        "--output",
-        type=Path,
-        help="Lokasi file hasil; default: output/<nama-pdf>.<format>",
-    )
-    return parser
-
-
 def main() -> None:
-    input_pdf = Path("input_pdf/Pedoman PI.pdf")
-    output_file = Path("output/Pedoman PI.md")
-    output_format = "md"
-
     try:
         saved_file = extract_text(
-            input_pdf=input_pdf,
-            output_file=output_file,
-            output_format=output_format,
+            input_pdf=INPUT_PDF,
+            output_file=OUTPUT_FILE,
+            output_format=OUTPUT_FORMAT,
         )
     except (FileNotFoundError, ValueError, OSError, RuntimeError) as error:
         raise SystemExit(f"Gagal: {error}") from error

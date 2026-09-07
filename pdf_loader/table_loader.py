@@ -1,10 +1,14 @@
 """Tahap lanjutan: ekstrak tabel PDF digital menjadi file CSV."""
 
-import argparse
 import csv
 from pathlib import Path
 
 import pymupdf
+
+
+# Ubah nilai berikut sesuai file PDF dan folder output yang ingin digunakan.
+INPUT_PDF = Path("input_pdf/Pedoman PI.pdf")
+OUTPUT_DIR = Path("output/tables")
 
 
 def extract_tables(input_pdf: Path, output_dir: Path) -> list[Path]:
@@ -37,28 +41,11 @@ def extract_tables(input_pdf: Path, output_dir: Path) -> list[Path]:
     return saved_files
 
 
-def build_parser() -> argparse.ArgumentParser:
-    """Membuat daftar argumen command line."""
-    parser = argparse.ArgumentParser(
-        description="Ekstrak tabel PDF digital menjadi CSV tanpa OCR."
-    )
-    parser.add_argument("input_pdf", type=Path, help="Lokasi file PDF yang dibaca")
-    parser.add_argument(
-        "-o",
-        "--output-dir",
-        type=Path,
-        default=Path("output/tables"),
-        help="Folder hasil CSV; default: output/tables",
-    )
-    return parser
-
-
 def main() -> None:
-    """Menjalankan ekstraksi tabel berdasarkan argumen dari terminal."""
-    args = build_parser().parse_args()
+    """Menjalankan ekstraksi tabel menggunakan konfigurasi di dalam file."""
 
     try:
-        saved_files = extract_tables(args.input_pdf, args.output_dir)
+        saved_files = extract_tables(INPUT_PDF, OUTPUT_DIR)
     except (FileNotFoundError, ValueError, OSError, RuntimeError) as error:
         raise SystemExit(f"Gagal: {error}") from error
 
