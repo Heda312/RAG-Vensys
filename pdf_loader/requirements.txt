@@ -1,0 +1,3 @@
+# Versi yang digunakan saat pengujian dengan Python 3.11.
+# pip otomatis memasang dependency bawaan pymupdf4llm.
+pymupdf4llm==1.28.2
