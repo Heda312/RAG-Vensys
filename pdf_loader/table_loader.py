@@ -7,7 +7,7 @@ import pymupdf
 
 
 # Ubah nilai berikut sesuai file PDF dan folder output yang ingin digunakan.
-INPUT_PDF = Path("input_pdf/Pedoman PI.pdf")
+INPUT_PDF = Path("input_pdf/LPJ.pdf")
 OUTPUT_DIR = Path("output/tables")
 
 

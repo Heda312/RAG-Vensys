@@ -7,8 +7,8 @@ import pymupdf4llm
 
 # Ubah nilai berikut sesuai file PDF dan format output yang ingin digunakan.
 INPUT_PDF = Path("input_pdf/Pedoman PI.pdf")
-OUTPUT_FILE = Path("output/Pedoman PI.md")
-OUTPUT_FORMAT = "md"
+OUTPUT_FILE = Path("output/Pedoman PI.txt")
+OUTPUT_FORMAT = "txt"
 
 
 def extract_text(input_pdf: Path, output_file: Path, output_format: str) -> Path:
@@ -21,14 +21,14 @@ def extract_text(input_pdf: Path, output_file: Path, output_format: str) -> Path
         raise ValueError("File input harus berformat .pdf")
 
     # OCR sengaja dimatikan. PDF hasil scan dapat menghasilkan teks kosong.
-    if output_format == "md":
-        extracted_text = pymupdf4llm.to_markdown(
+    if output_format == "txt":
+        extracted_text = pymupdf4llm.to_text(
             str(input_pdf),
             use_ocr=False,
             show_progress=True,
         )
     else:
-        extracted_text = pymupdf4llm.to_text(
+        extracted_text = pymupdf4llm.to_markdown(
             str(input_pdf),
             use_ocr=False,
             show_progress=True,
